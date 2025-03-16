@@ -12,6 +12,6 @@ struct Arguments {
     std::string domain{};
 };
 
-Arguments analyzeArgs(int argc, char* argv[]);
+Arguments analyzeArgs(const int &argc, char* argv[]);
 void showHelpPage();
 

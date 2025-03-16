@@ -1,6 +1,6 @@
 #include "interface.hpp"
 
-Arguments analyzeArgs(int argc, char* argv[]) {
+Arguments analyzeArgs(const int &argc, char* argv[]) {
     Arguments args;
     if(argc > 2) {
         args.domain = argv[1]; 
