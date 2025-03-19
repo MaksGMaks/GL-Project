@@ -29,6 +29,19 @@ Arguments analyzeArgs(const int &argc, char* argv[]) {
                     throw std::exception{};
                 }
                 break;
+            case 't':
+                count++;
+                if(count == argc) {
+                    std::cerr << "Argument used but not filled!" << std::endl;
+                    throw std::exception{};
+                }
+                args.timeout = strtol(argv[count], &dump, 10);
+
+                if(argv[count] == dump || *dump != '\0') {
+                    std::cerr << "Non digital value at MAX_HOPS argument!" << std::endl;
+                    throw std::exception{};
+                }
+                break;
             default:
                 std::cerr << "Wrong argument!" << std::endl;
                 throw std::exception{};
@@ -55,9 +68,13 @@ void showHelpPage() {
                  "-i INTERFACE - define, which interface use for tracing. \n"
                  "INTERFACE should be name from system {see by $(ip addr)} of device. Make sure it can reach requesting ip/domain\n"
                  "\n"
-                 "-c NUM - amount of shown ips between you and destination. NUM should be number from 1 to 2^32\n"
+                 "-c NUM - amount of shown ips between you and destination. NUM should be number from 1 to 65535\n"
                  "\n"
                  "-h - show this page (nettrace -h)\n"
                  "\n"
                  << std::endl;
+}
+
+double getTimeDiff(const struct timespec &start, const struct timespec &end) {
+    return (end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec) / 1e3;
 }
