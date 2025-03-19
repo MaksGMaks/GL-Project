@@ -73,16 +73,19 @@ int main(int argc, char* argv[]) {
         currentTTL = ttl;
         timeoutCount = 0;
 
-
-        char host[NI_MAXHOST];
-        
-        int domainStatus = getnameinfo((struct sockaddr *)&responseAddress, sizeof(responseAddress)
-                                 , host, sizeof(host), nullptr, 0, NI_NAMEREQD);
-        std::string domain = (domainStatus < 0) ? "" : std::string(host);
-        
         char routerIp[INET_ADDRSTRLEN];
         inet_ntop(AF_INET, &responseAddress.sin_addr, routerIp, sizeof(routerIp));
-        std::cout << ttl << "\t| " << routerIp << ((std::string(routerIp).length() < 14) ? "\t\t| " : "\t| ") << timeTaken << "ms\t| " << domain << std::endl;
+
+        std::cout << ttl << "\t| " << routerIp << ((std::string(routerIp).length() < 14) ? "\t\t| " : "\t| ") << timeTaken << "ms";
+        if(allArgs.showFQDN) {
+            char host[NI_MAXHOST];
+        
+            int domainStatus = getnameinfo((struct sockaddr *)&responseAddress, sizeof(responseAddress)
+                                     , host, sizeof(host), nullptr, 0, NI_NAMEREQD);
+            std::string domain = (domainStatus < 0) ? "" : std::string(host);
+            std::cout << "\t| " << domain;
+        }
+        std::cout << std::endl;
 
         if (responseAddress.sin_addr.s_addr == destAddress.sin_addr.s_addr) {
             break;

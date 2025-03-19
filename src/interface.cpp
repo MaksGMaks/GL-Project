@@ -42,6 +42,9 @@ Arguments analyzeArgs(const int &argc, char* argv[]) {
                     throw std::exception{};
                 }
                 break;
+            case 'd':
+                args.showFQDN = true;
+                break;
             default:
                 std::cerr << "Wrong argument!" << std::endl;
                 throw std::exception{};
@@ -53,8 +56,8 @@ Arguments analyzeArgs(const int &argc, char* argv[]) {
         std::cerr << "Program require ip/domain for work!" << std::endl;
         throw std::exception{};
     }
-    if(argv[1] == "-h")
-        showHelpPage();
+    if(std::string(argv[1]) == "-h")
+        throw std::exception{};
     else {
         args.domain = argv[1]; 
     }
@@ -63,12 +66,16 @@ Arguments analyzeArgs(const int &argc, char* argv[]) {
 
 void showHelpPage() {
     std::cout << "\n\t\t- - - - HOW TO USE - - - -\n\n"
-                 "nettrace IP/DOMAIN [-i INTERFACE] [-c NUM]\n"
+                 "nettrace IP/DOMAIN [-i INTERFACE] [-c NUM] [-t TIME] [-d]\n"
                  "\n"
                  "-i INTERFACE - define, which interface use for tracing. \n"
                  "INTERFACE should be name from system {see by $(ip addr)} of device. Make sure it can reach requesting ip/domain\n"
                  "\n"
-                 "-c NUM - amount of shown ips between you and destination. NUM should be number from 1 to 65535\n"
+                 "-c NUM - amount of shown ips between you and destination, by default is 10. NUM should be number from 1 to 65535\n"
+                 "\n"
+                 "-t TIME - timeout in seconds, by default is 3. TIME should be number from 1 to 255\n"
+                 "\n"
+                 "-d - option to show FQDN of ip if it's available\n"
                  "\n"
                  "-h - show this page (nettrace -h)\n"
                  "\n"

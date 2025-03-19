@@ -12,7 +12,8 @@ struct Arguments {
     uint16_t max_hops = MAX_HOPS;
     std::string interface{};
     std::string domain{};
-    uint16_t timeout = MAX_TIMEOUT;
+    uint8_t timeout = MAX_TIMEOUT;
+    bool showFQDN = false;
 };
 
 Arguments analyzeArgs(const int &argc, char* argv[]);
