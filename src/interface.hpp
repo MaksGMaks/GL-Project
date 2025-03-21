@@ -4,6 +4,7 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include <sys/time.h>
 
 #define MAX_HOPS 10 
 #define MAX_TIMEOUT 3
